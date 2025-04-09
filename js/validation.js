@@ -100,11 +100,21 @@ const validateForm = () => {
     let region = myForm["select-region"].value;
     let comuna = myForm["select-comuna"].value;
     let nombre = myForm["nombre"].value;
+    let celular = myForm["celular"].value;
     let email = myForm["email"].value;
     let contacto = myForm.querySelectorAll('.form-sect2 input[type="checkbox"]');
     let tiempoInicial = myForm["tiempo-inicio"].value;
+    let tiempoFinal = myForm["tiempo-final"].value;
     let tema = myForm.querySelectorAll('.form-sect3 input[type="checkbox"]');
-    let files = myForm.querySelectorAll('#contenedor-files input[type="file"]');
+    let filesInput = myForm.querySelectorAll('#contenedor-files input[type="file"]');
+
+    let files = [];
+    for (const input of filesInput) {
+        const fileList = input.files;
+        for (const file of fileList) {
+            files.push(file);
+        }
+    }
 
     let invalidInputs = [];
     let isValid = true;
@@ -125,6 +135,9 @@ const validateForm = () => {
     if (!validateEmail(email)) {
         setInvalidInput("Email");
     }
+    if (!validatePhoneNumber(celular)) {
+        setInvalidInput("Celular(opcional)");
+    }
     if (!validateCheckBoxContact(contacto)) {
         setInvalidInput("Contacto");
     }
@@ -133,6 +146,9 @@ const validateForm = () => {
     }
     if (!validateIHour(tiempoInicial)) {
         setInvalidInput("Hora de inicio");
+    }
+    if (!validateFHour(tiempoFinal)) {
+        setInvalidInput("Hora final(opcional)")
     }
     if (!validateFiles(files)) {
         setInvalidInput("Archivos");
