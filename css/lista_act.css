@@ -1,0 +1,27 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 110px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+table {
+    border-collapse: collapse; /* Une los bordes */
+    width: 100%; /* Hace que la tabla ocupe el ancho disponible */
+    border: 1px solid #ccc;  /* Borde exterior opcional para la tabla */
+}
+
+th, td {
+    padding: 40px 30px;
+    border: 1px solid #ccc; /* Borde para cada celda */
+}
+
+img {
+    width: 480px;
+    height: 320px;
+}

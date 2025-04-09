@@ -1,0 +1,14 @@
+.main-container{
+    position: relative;
+}
+
+.main-container .image-container {
+    display: flex;
+    justify-content: center;
+}
+
+.main-container .image-container .image{
+    height: 320px;
+    width: 240px;
+}
+
