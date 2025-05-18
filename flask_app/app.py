@@ -63,12 +63,12 @@ def nueva_act():
         sector = request.form.get("sector")
         email = request.form.get("email")
         celular = request.form.get("celular")
-        contactos = request.form.getlist("contacto")# Listo
+        contactos = request.form.getlist("contacto")
         inicio = request.form.get("tiempo-inicio")
         fin = request.form.get("tiempo-final")
         descripcion = request.form.get("descripcion")
-        temas = request.form.getlist("temas") # MULTIPLE listo
-        act_img = request.files.getlist("files") # MULTIPLE listo
+        temas = request.form.getlist("temas")
+        act_img = request.files.getlist("files")
         error = ""
         print(comuna)
 
@@ -86,8 +86,7 @@ def nueva_act():
                 identificador = request.form.get(id_formulario)
                 status, msg = db.register_contacto(nombre_c,
                                     identificador,
-                                    id) # POR AHORA LISTO
-                #error += msg
+                                    id)
 
             # 3 save img as file
             for image in act_img:
@@ -208,9 +207,7 @@ def info_act(id):
 
     return render_template("html/info_act.html", data=data)
     
-    
-    
-#FALTA LA DEL GRAFICO
+
 @app.route("/estadisticas", methods = ["GET"])
 def estadisticas():
     return

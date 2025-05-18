@@ -44,6 +44,5 @@ def validate_act_img(conf_img):
     return True
 
 def validate_act(region, comuna, nombre, email, dia_inicio, temas, fotos):
-    print(temas)
 
     return validate_name(nombre) and validate_email(email) and validate_dia_hora_inicio(dia_inicio) and validate_temas(temas) and validate_act_img(fotos)
