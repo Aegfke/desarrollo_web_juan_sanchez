@@ -1,0 +1,36 @@
+body {
+    display: flex;
+    background-color: antiquewhite;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+   
+}
+
+.main-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.main-container th,
+.main-container td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #000000;
+    text-align: center;
+}
+
+img {
+    width: 320px;
+    height: 240px;
+}
+
+.pagination {
+    text-align: center;
+    margin-top: 20px;
+}

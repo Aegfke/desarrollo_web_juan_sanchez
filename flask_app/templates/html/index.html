@@ -1,0 +1,56 @@
+{% extends 'html/base.html' %}
+{% block title %} Portada {% endblock %}
+{% block css %}
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/index.css') }}"
+    />
+{% endblock %}
+
+{% block content %}
+
+<div class="main-container">
+
+    <div class="greating-message">
+        <p>Bienvenidoooooo</p>
+    </div>
+
+    <div class="links">
+        <a href="{{ url_for('nueva_act') }}" class="button-link">Agregar actividad</a>
+
+        <a href="{{ url_for('lista_act') }}" class="button-link">Lista de actividades</a>
+
+        <a href="{{ url_for('estadisticas') }}" class="button-link">Estadísticas</a>
+
+    </div>
+
+    <div class="act-list">
+        <table>
+            <tr>
+                <th>Inicio</th>
+                <th>Término</th>
+                <th>Comuna</th>
+                <th>Sector</th>
+                <th>Tema</th>
+                <th>Foto</th>
+            </tr>
+            {% if data %}
+                {% for act in data %}
+                <tr>
+                    <td>{{act.hora_inicio}}</td>
+                    <td>{{act.hora_termino}}</td>
+                    <td>{{act.comuna}}</td>
+                    <td>{{act.sector}}</td>
+                    <td>{{act.tema}}</td>
+                    <td><img src="{{act.path_foto}}"></td>
+                </tr>
+                {% endfor %}
+            {% endif %}
+        </table>
+
+    </div>
+</div>
+{% endblock content %}
+{% block javascript %}
+
+{% endblock %}

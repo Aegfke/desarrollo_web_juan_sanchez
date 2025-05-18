@@ -1,0 +1,105 @@
+{% extends 'html/base.html' %} 
+{% block title %} Informar actividad {% endblock %}
+{% block css %}
+    <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/nueva_act.css') }}"
+    />
+{% endblock css %}
+
+{% block content %}
+<div class="main-container">
+    <div id="val-box" hidden>
+        <h2 id="val-msg"></h2>
+        <ul id="val-list"></ul>
+    </div>
+
+    <form name="myForm" method="post" enctype="multipart/form-data">
+        {% if error %}
+            <div class="error-msg">
+            {{ error }}
+            </div>
+            {% endif %}
+        <div class="form-sect">
+            <label for="select-region">Región</label>
+            <select name="select-region" id="select-region" required>
+                <option value="">Seleccione una Región</option>
+            </select><br>
+
+            <label for="select-comuna">Comuna</label>
+            <select name="select-comuna" id="select-comuna" required>
+                <option value="">Seleccione una comuna</option>
+            </select><br>
+
+            <label for="sector">Sector</label>
+            <input type="text" name="sector" id="sector" maxlength="100"><br>
+        </div>
+        <div class="form-sect2">
+            <label for="nombre">Nombre</label>
+            <input type="text" name="nombre" id="nombre" maxlength="200" required><br>
+
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" maxlength="100" required><br>
+
+            <label for="celular">Número de celular</label>
+            <input type="tel" name="celular" id="celular"><br>
+
+            <label>Contacto</label><br>
+            <input type="checkbox" name="contacto" value="whatsapp" onclick="revisaCheck(this);"> whatsapp
+            <input id="whatsapp" type="text" name="whatsapp-id" style="display:none;" minlength="4" maxlength="50"><br>
+
+            <input type="checkbox" name="contacto" value="telegram" onclick="revisaCheck(this);"> telegram
+            <input id="telegram" type="text" name="telegram-id" style="display:none;" minlength="4" maxlength="50"><br>
+
+            <input type="checkbox" name="contacto" value="x" onclick="revisaCheck(this);"> X
+            <input id="x" type="text" name="x-id" style="display:none;" minlength="4" maxlength="50"><br>
+
+            <input type="checkbox" name="contacto" value="instagram" onclick="revisaCheck(this);"> instagram
+            <input id="instagram" type="text" name="instagram-id" style="display:none;" minlength="4" maxlength="50"><br>
+
+            <input type="checkbox" name="contacto" value="tiktok" onclick="revisaCheck(this);"> tiktok
+            <input id="tiktok" type="text" name="tiktok-id" style="display:none;" minlength="4" maxlength="50"><br>
+
+            <input type="checkbox" name="contacto" value="otra" onclick="revisaCheck(this);"> otra
+            <input id="otra" type="text" name="otra-id" style="display:none;" minlength="4" maxlength="50"><br>
+
+        </div>
+
+        <div class="form-sect3">
+            <label for="tiempo-inicio">Día hora inicio</label>
+            <input type="datetime-local" name="tiempo-inicio" id="tiempo-inicio" required><span class="validity"></span><br>
+
+            <label for="tiempo-final">Día hora termino</label>
+            <input type="datetime-local" name="tiempo-final" id="tiempo-final"><span class="validity"></span><br>
+
+            <label for="descripcion">Descripción</label>
+            <textarea id="descripcion" rows="10" cols="50"></textarea><br>
+
+            <label>Tema</label><br>
+            <input type="checkbox" name="temas" value="musica">música<br>
+            <input type="checkbox" name="temas" value="deporte">deporte<br>
+            <input type="checkbox" name="temas" value="ciencias">ciencias<br>
+            <input type="checkbox" name="temas" value="religion">religión<br>
+            <input type="checkbox" name="temas" value="politica">política<br>
+            <input type="checkbox" name="temas" value="tecnologia">tecnología<br>
+            <input type="checkbox" name="temas" value="juegos">juegos<br>
+            <input type="checkbox" name="temas" value="baile">baile<br>
+            <input type="checkbox" name="temas" value="comida">comida<br>
+            <input type="checkbox" name="temas" value="otro" onclick="revisaCheck(this);"> otro<br>
+            <input id="otro" type="text" name="otro-id" style="display:none;" minlength="3" maxlength="15"><br>
+
+
+            <div id="contenedor-files">
+                <label for="files">Fotos</label><br>
+                <input type="file" name="files" id="files" accept="image/*,.pdf" required><br>
+            </div>
+            <button id="agregar-foto" onclick="agregarInput()">Agregar otro foto</button><br>
+        </div>
+        
+        <button id="submit-btn" type="button">Agregar esta actividad</button>
+    </form>
+</div>
+{% endblock %} {% block javascript %}
+    <script lang="javascript" src="{{ url_for('static', filename='js/validation.js') }}"></script>
+    <script lang="javascript" src="{{ url_for('static', filename='js/select.js') }}"></script>
+{% endblock %}

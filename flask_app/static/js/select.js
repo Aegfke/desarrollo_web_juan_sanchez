@@ -136,9 +136,9 @@ const updateTiempoFinal = () => {
 
 function revisaCheck(element) {
     if (element.checked) {
-        document.getElementById(element.name).style.display = "block";
+        document.getElementById(element.value).style.display = "block";
     } else {
-        document.getElementById(element.name).style.display = "none";
+        document.getElementById(element.value).style.display = "none";
     }
 }
 
@@ -151,6 +151,8 @@ function agregarInput() {
     let newInput = document.createElement('input');
     let br = document.createElement('br');
     newInput.setAttribute('type', 'file');
+    newInput.setAttribute('name', 'files'); // REVISAR DESPUES SI NO FUNCIONA
+    newInput.setAttribute('accept', 'image/*,.pdf');
     box.appendChild(newInput);
     box.appendChild(br);
 

@@ -1,0 +1,6 @@
+{
+    "get_activity_by_id": "SELECT id, comuna_id, sector, nombre, email, celular, dia_hora_inicio, dia_hora_termino, descripcion FROM actividad WHERE id=%s;",
+    "get_": "",
+    "create_actividad": "INSERT INTO actividad (comuna_id, sector, nombre, email, celular, dia_hora_inicio, dia_hora_termino, descripcion) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+    "create_foto": "INSERT INTO foto (ruta_archivo, nombre_archivo"
+}

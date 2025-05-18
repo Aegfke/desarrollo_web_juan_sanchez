@@ -1,0 +1,59 @@
+{% extends 'html/base.html' %}
+{% block title %} Información {% endblock %}
+{% block css %}
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/info_act.css') }}"
+    />
+{% endblock %}
+
+{% block content %}
+<div class="main-container">
+    <h1>Información de la actividad</h1> 
+    {% if data %}
+        <p><strong>Nombre:</strong> {{ data.nombre }}</p>
+        <p><strong>Fecha de Inicio:</strong> {{ data.inicio }}</p>
+        {% if data.final %}
+            <p><strong>Final:</strong> {{ data.final }}</p>
+        {% endif %}
+        <p><strong>Comuna:</strong> {{ data.comuna }}</p>
+        {% if data.celular %}
+            <p><strong>Celular:</strong> {{ data.celular }}</p>
+        {% endif %}
+        {% if data.sector %}
+            <p><strong>Sector:</strong> {{ data.sector }}</p>
+        {% endif %}
+        <p><strong>Temas:</strong>
+            {% for tema in data.temas %}
+                {{ tema }}{% if not loop.last %}, {% endif %}
+            {% endfor %}
+            .</p>
+        {% if data.descripcion %}
+            <p><strong>Descripción:</strong> {{ data.descripcion }}</p>
+        {% endif %}
+        <p><strong>Email:</strong> {{ data.email }}</p>
+        {% if data.celular %}
+            <p><strong>Celular:</strong> {{ data.celular }}</p>
+        {% endif %}
+        <h2>Fotos</h2>
+        {% for img in data.fotos %}
+            <div class="image-container">
+                <img class="image" src="{{ img }}">
+            </div>
+            <div class="agrandar-foto" hidden>
+                <button id="cerrar-img"></button>
+                <img id="foto-grande" width="600" height="800">
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="navegar">
+        <a href="{{ url_for('index') }}">Volver al Inicio</a>
+        <a href="{{ url_for('lista_act') }}">Volver al listado</a>
+    </div>
+</div>
+
+{% endblock content %}
+{% block javascript %}
+    <script lang="javascript" src="{{ url_for('static', filename='js/info_act') }}"></script>
+{% endblock %}

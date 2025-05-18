@@ -193,6 +193,7 @@ const validateForm = () => {
         submitButton.innerText = "Sí, estoy seguro";
         submitButton.style.marginRight = "10px";
         submitButton.addEventListener("click", () => {
+            myForm.submit();
             validationMessageElem.innerText = "Hemos recibido su información, muchas gracias y suerte en su actividad";
             submitButton.innerText = "Volver a la portada";
             backButton.remove();
