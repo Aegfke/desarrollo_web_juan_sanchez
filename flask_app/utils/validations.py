@@ -7,6 +7,12 @@ temas = ['musica','deporte', 'ciencias', 'religion','politica', 'tecnologia', 'j
 def validate_name(value):
     return value and len(value) <= 200
 
+def validate_name_comm(name):
+    return name and len(name) >= 3 and len(name) <= 80
+
+def validate_comm(comm):
+    return comm and len(comm) >= 3
+
 def validate_temas(value):
     return all(elem in temas for elem in value)
 
@@ -46,3 +52,6 @@ def validate_act_img(conf_img):
 def validate_act(region, comuna, nombre, email, dia_inicio, temas, fotos):
 
     return validate_name(nombre) and validate_email(email) and validate_dia_hora_inicio(dia_inicio) and validate_temas(temas) and validate_act_img(fotos)
+
+def validate_comment(nombre, comentario):
+    return validate_name_comm(nombre) and validate_comm(comentario)

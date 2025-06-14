@@ -9,6 +9,7 @@
 
 {% block content %}
 <div class="main-container">
+
     <h1>Información de la actividad</h1> 
     {% if data %}
         <p><strong>Nombre:</strong> {{ data.nombre }}</p>
@@ -47,6 +48,25 @@
         {% endfor %}
     {% endif %}
 
+    <div class="comentarios">
+        <div id="comment_list"></div>
+        <div class="comment-form">
+            
+            <div id="val-box" hidden>
+                <h2 id="val-msg"></h2>
+                <ul id="val-list"></ul>
+            </div>
+
+            <form name="comments" method="post" enctype="" data-actividad-id="{{ data.id }}">
+                <label>Nombre</label><br>
+                <input type="text" name="nombre" id="nombre" value="{{ nombre }}"><br>
+                <label>Comentario</label><br>
+                <textarea id="comentario" name="comentario" rows="4" cols="50">{{ comentario }}</textarea><br>
+                <button type="button" id="submit-comment">Agregar Comentario</button><br>
+            </form>
+        </div>
+    </div>
+
     <div class="navegar">
         <a href="{{ url_for('index') }}">Volver al Inicio</a>
         <a href="{{ url_for('lista_act') }}">Volver al listado</a>
@@ -55,5 +75,6 @@
 
 {% endblock content %}
 {% block javascript %}
-    <script lang="javascript" src="{{ url_for('static', filename='js/info_act') }}"></script>
+    <script lang="javascript" src="{{ url_for('static', filename='js/info_act.js') }}"></script>
+    <script lang="javascript" src="{{ url_for('static', filename='js/validate_comment.js')}}"></script>
 {% endblock %}

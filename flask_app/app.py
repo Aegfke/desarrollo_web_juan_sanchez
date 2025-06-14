@@ -1,7 +1,9 @@
-from flask import Flask, request, render_template, redirect, url_for, session
-from utils.validations import validate_act, validate_act_img
+from flask import Flask, request, render_template, redirect, url_for, session, jsonify
+from flask_cors import cross_origin
+from utils.validations import validate_act, validate_act_img, validate_comment
 from database import db
 from werkzeug.utils import secure_filename
+from datetime import datetime
 import hashlib
 import filetype
 import os
@@ -205,12 +207,76 @@ def info_act(id):
         "contactos": contactos 
     }
 
-    return render_template("html/info_act.html", data=data)
+    return render_template("html/info_act.html", data=data, error=None)
     
+
+@app.route("/get-comment/<int:act_id>", methods=["GET"])
+@app.route("/get-comment/", methods=["GET"])
+def get_comments(act_id):
+    #Obtener los comentarios de una actividad en particular
+    ret = db.get_comments_by_id(act_id)
+
+    return jsonify(ret)
+
+@app.route("/post-comment/<int:act_id>", methods=["POST"])
+@cross_origin(origin="127.0.0.1", supports_credentials=True)
+def post_comment(act_id):
+
+    data = request.json
+    nombre = data.get('nombre')
+    texto = data.get('texto')
+
+    if validate_comment(nombre, texto):
+
+            #save comment in db
+
+            fecha = datetime.now()
+
+            db.register_comment(act_id, nombre, texto, fecha)
+
+            return jsonify({"status": "ok", "data": {
+                "nombre": nombre,
+                "texto": texto,
+                "fecha": fecha.strftime("%d/%m/%Y %H:%M:%S")
+            }})
+    
+    else:
+
+        return jsonify({"status": "error", "data": "Invalid comment"}), 400
+
+
+
+
+    
+
+
+
+    
+    
+#-----STATS------------
 
 @app.route("/estadisticas", methods = ["GET"])
 def estadisticas():
-    return
+    return render_template("html/estadisticas.html")
+
+@app.route("/get-stats-data", methods=["GET"])
+@cross_origin(origin="127.0.0.1", supports_credentials=True)
+def get_stats_data():
+
+    graph1 = db.get_first_graph()
+
+    graph2 = db.get_second_graph()
+
+    graph3 = db.get_third_graph()
+
+    resultado = {
+        "graph1": graph1,
+        "graph2": graph2,
+        "graph3": graph3
+    }
+
+
+    return jsonify(resultado)
 
 
 

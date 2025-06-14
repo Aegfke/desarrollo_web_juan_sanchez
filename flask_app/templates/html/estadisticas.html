@@ -2,21 +2,24 @@
 <html>
 <head>
     <title>Estadísticas</title>
-    <link rel="stylesheet" text="text/css" href="/css/">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estadisticas.css')}}">
 </head>
 <body>
     <div class="main-container">
-        <h1>Estadísticas</h1>
-        <h2>Actividades por día</h2>
-        <img src="/media/Grafico_barras.png">
-        <h2>Actividades por tipo</h2>
-        <img src="/media/Grafico_torta.png">
-        <h2>Actividades por momento del día</h2>
-        <img src="/media/grafico_horas.png">
+        <figure class="highcharts-figure">
+            <div id="first-graph"></div>
 
-        <a href="index.html">Volver al inicio</a>
+            <div id="second-graph"></div>
+
+            <div id="third-graph"></div>
+        </figure>
+
+        <a href="{{ url_for('index') }}">Volver al inicio</a>
 
     </div>
     
 </body>
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="{{ url_for('static', filename='js/estadisticas.js') }}"></script>
 </html>

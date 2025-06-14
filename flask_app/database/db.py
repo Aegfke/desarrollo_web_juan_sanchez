@@ -2,7 +2,7 @@ import pymysql
 import json
 import math
 
-from sqlalchemy import create_engine, Column, Integer, BigInteger, String, ForeignKey, DateTime, Enum
+from sqlalchemy import create_engine, Column, Integer, BigInteger, String, ForeignKey, DateTime, Enum, func
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship
 
 DB_NAME = "tarea2"
@@ -77,6 +77,17 @@ class Region(Base):
 	id = Column(BigInteger, primary_key=True, autoincrement=True)
 	nombre = Column(String(200), nullable=False)
 
+#-------comentario
+
+class Comentario(Base):
+	__tablename__ = "comentario"
+
+	id = Column(BigInteger, primary_key=True, autoincrement=True)
+	nombre = Column(String(80), nullable=False)
+	texto = Column(String(300), nullable=False)
+	fecha= Column(DateTime, nullable=False)
+	actividad_id = Column(BigInteger, ForeignKey('actividad.id'), nullable=False)
+
 
 #-- querys --
 
@@ -86,6 +97,84 @@ def get_activities(page_size, page):
 	actividades = session.query(Actividad).limit(page_size).offset(offset).all()
 	session.close()
 	return actividades
+
+def get_all_activities():
+	session = SessionLocal()
+	act = session.query(Actividad).all()
+	session.close()
+	return act
+
+#-----------------GRAPHS-------------------
+def get_first_graph():
+	session = SessionLocal()
+	act = session.query(Actividad.dia_hora_inicio).all()
+
+	contador = {}
+	for actividad in act:
+		fecha = actividad[0].date()
+		if fecha not in contador:
+			contador[fecha] = 0
+		contador[fecha] += 1
+	
+	resultado = [
+        {"fecha": fecha.strftime("%Y-%m-%d"), "cantidad": cantidad}
+        for fecha, cantidad in contador.items()
+    ]
+	session.close()
+
+	return resultado
+
+def get_second_graph():
+	session = SessionLocal()
+
+	tema_counts = session.query(
+        Actividad_tema.tema,
+        func.count(Actividad_tema.id).label('cantidad')
+    ).group_by(Actividad_tema.tema).all()
+
+	resultado = [{"tema": item.tema, "cantidad": item.cantidad} for item in tema_counts]
+
+	session.close()
+	return resultado
+
+def get_third_graph():
+	session = SessionLocal()
+
+	act_counts = session.query(Actividad.dia_hora_inicio).all()
+
+	count = {}
+	resultado = []
+
+	for (inicio,) in act_counts:
+		mes_año = inicio.strftime("%m-%Y").capitalize()
+
+		if mes_año not in count:
+			count[mes_año] = {
+				"mañana": 0,
+				"tarde": 0,
+				"noche": 0
+			}
+
+		hora = inicio.hour
+
+		if 6 <= hora < 12:
+			count[mes_año]['mañana'] += 1
+		elif 12 <= hora < 18:
+			count[mes_año]['tarde'] += 1
+		else:
+			count[mes_año]['noche'] += 1
+		
+	for mes_año in count:
+		resultado.append({
+			"mes_año": mes_año,
+			"cantidad": count[mes_año]
+		})
+	
+	session.close()
+	return resultado
+
+
+#---------------------------------------
 
 def get_activity_by_id(id):
 	session = SessionLocal()
@@ -158,6 +247,21 @@ def get_all_contactos(id):
 
 	return temas
 
+def get_comments_by_id(id):
+	session = SessionLocal()
+	cursor = session.query(Comentario).filter(Comentario.actividad_id == id).all()
+	
+	comentarios = []
+	for comm in cursor:
+		comentarios.append({
+			"nombre": comm.nombre,
+			"texto": comm.texto,
+			"fecha": comm.fecha.strftime("%Y-%m-%d %H:%M:%S")
+		})
+	session.close()
+	return comentarios
+
+
 
 
 
@@ -188,6 +292,13 @@ def create_foto(ruta_archivo, nombre_archivo, actividad_id):
 	session.add(new_foto)
 	session.commit()
 	session.close()
+
+def create_comentario(actividad_id, nombre, comentario, fecha):
+	session= SessionLocal()
+	new_comment = Comentario(nombre = nombre, texto = comentario, fecha = fecha, actividad_id = actividad_id)
+	session.add(new_comment)
+	session.commit()
+	session.close()
 	
 
 # -- db-related functions --
@@ -197,14 +308,22 @@ def register_actividad(comuna, sector, nombre, email, celular, dia_hora_inicio, 
 	create_activity(comuna, sector, nombre, email, celular, dia_hora_inicio, dia_hora_termino, descripcion)
 	return True, None
 
-def register_contacto(nombre, identificador, actividad_id): # MODIFICAR PARA QUE NO SE AGREGUE SI YA ESTABA EN LA BASE DE DATOS
+def register_contacto(nombre, identificador, actividad_id):
 
 	create_contactar_por(nombre, identificador, actividad_id)
 
 	return True, None
 
-def register_tema(tema, glosa_otro, actividad_id): # AQUI NO DEBERIA ESTAR EL MISMO TEMA CON LA MISMA ACTIVIDAD_ID
+def register_tema(tema, glosa_otro, actividad_id):
 
 	create_tema(tema, glosa_otro, actividad_id)
 
 	return True, None
+
+def register_comment(id, nombre, comentario, fecha):
+
+	create_comentario(id, nombre, comentario, fecha)
+
+	return True, None
+
+
