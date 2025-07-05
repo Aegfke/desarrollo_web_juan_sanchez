@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8" />
+        <title>Evaluar</title>
+
+        <!-- CSS -->
+         <link rel="stylesheet" th:href="@{/css/evaluar.css}">
+    </head>
+
+    <body>
+        <section class="main-container">
+            <div class="note-container">
+                <form name="myForm" method="post">
+                    <label>Calificación</label>
+                    <select name="act-note" id="select-nota" required>
+                        <option value="">Seleccione una calificación</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                    </select><br>
+                </form>
+                <button id="submit-btn" type="button">Evaluar</button>
+            </div>
+        </section>
+        <script th:src="@{/js/validate_nota.js}"></script>
+    </body>
+</html>

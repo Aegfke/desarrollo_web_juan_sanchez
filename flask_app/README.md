@@ -1,1 +1,0 @@
-Para las rutas, estadisticas no se utiliza ni se direcciona a alguna direccion, para utilizar la base de datos se necesita crear el usuario de create_user.sql

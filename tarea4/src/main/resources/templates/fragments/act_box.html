@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+    <th:block th:fragment="act_list(act)">
+        <td th:text="${act['id']}"></td>
+        <td th:text="${act['fecha_inicio']}"></td>
+        <td th:text="${act['sector']}"></td>
+        <td th:text="${act['nombre']}"></td>
+        <td th:text="${act['tema']}"></td>
+    </th:block>
+</body>

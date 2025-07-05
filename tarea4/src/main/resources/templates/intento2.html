@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8" />
+        <title>Lista de actividades</title>
+
+        <!-- Css-->
+        <link rel="stylesheet" th:href="@{/css/index.css}">
+    </head>
+
+    <body>
+
+        
+
+        <section class="main-container">
+            <h1> Notas de actividades</h1>
+            <!-- Tabla-->
+            <div id="act-list">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Fecha</th>
+                            <th>Sector</th>
+                            <th>Nombre</th>
+                            <th>Tema</th>
+                            <th>Nota</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <th:block th:each="act : ${data}">
+                            <tr th:attr="data-actividad-id=${act['id']}">
+                                <th:block th:replace="~{fragments/act_box :: act_list(${act})}" />
+                                <td th:id="'actividad-id-' + ${act['id']}">‑</td>
+                                <td>
+                                    <a th:href="@{/post-nota/{id}(id=${act['id']})}">Evaluar</a>
+                                </td>
+                            </tr>
+                        </th:block>
+                    </tbody>
+
+                </table>
+
+            </div>
+            <div class="pagination">
+                <a th:if="${currentPage > 0}" th:href="@{/(pagenumber=${currentPage - 1})}">Anterior</a>
+                <a th:href="@{/(pagenumber=${currentPage + 1})}">Proxima</a>
+            </div>
+
+        </section>
+
+
+        <script>
+
+        </script>
+        <script th:src="@{/js/notes.js}"></script>
+    </body>
